@@ -10,5 +10,6 @@ public interface TeacherService {
     TeacherPage getAllTeachers();
     TeacherDto createTeacher(NewTeacherDto teacher);
     TeacherDto findById(UUID id);
+    TeacherDto updateById(TeacherDto teacher);
     void deleteById(UUID id);
 }

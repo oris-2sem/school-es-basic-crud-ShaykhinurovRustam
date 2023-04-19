@@ -31,10 +31,17 @@ public class TimetableController {
         return timetableService.createTimetable(newTimetableDto);
     }
 
+    @PostMapping("/update")
+    public TimetableDto updateById(@RequestBody TimetableDto timetableDto) {
+        return timetableService.updateById(timetableDto);
+    }
+
     @PostMapping("/del")
     public UUID deleteById(@RequestBody ModelId id) {
         timetableService.deleteById(id.getId());
         return id.getId();
     }
+
+
 
 }

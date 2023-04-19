@@ -10,5 +10,6 @@ public interface LessonService {
     LessonPage getAllLessons();
     LessonDto createLesson(NewLessonDto lesson);
     LessonDto findById(UUID id);
+    LessonDto updateById(LessonDto lesson);
     void deleteById(UUID id);
 }

@@ -13,6 +13,7 @@ import ru.itis.ediary.repositories.TeacherRepository;
 import ru.itis.ediary.repositories.TimetableRepository;
 import ru.itis.ediary.services.TimetableService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -54,6 +55,22 @@ public class TimetableServiceImpl implements TimetableService {
     public TimetableDto findById(UUID id) {
         Optional<Timetable> timetable = timetableRepository.findById(id);
         return timetable.map(TimetableDto::from).orElse(null);
+    }
+
+    @Override
+    public TimetableDto updateById(TimetableDto timetable) {
+        Optional<Timetable> optionalTimetable = timetableRepository.findById(timetable.getId());
+
+        if (optionalTimetable.isPresent()) {
+            Timetable timetableToUpdate = optionalTimetable.get();
+            timetableToUpdate.setRoom(timetable.getRoom());
+            timetableToUpdate.setDateTime(timetable.getDateTime());
+
+            timetableRepository.save(timetableToUpdate);
+            return from(timetableToUpdate);
+        } else {
+            throw new EntityNotFoundException("Entity with id " + timetable.getId() + " not found");
+        }
     }
 
     @Override

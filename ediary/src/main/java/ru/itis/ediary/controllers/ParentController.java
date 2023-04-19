@@ -31,6 +31,11 @@ public class ParentController {
         return parentService.createParent(newParentDto);
     }
 
+    @PostMapping("/update")
+    public ParentDto updateById(@RequestBody ParentDto parentDto) {
+        return parentService.updateById(parentDto);
+    }
+
     @PostMapping("/del")
     public UUID deleteById(@RequestBody ModelId id) {
         parentService.deleteById(id.getId());

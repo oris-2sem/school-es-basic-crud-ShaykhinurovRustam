@@ -10,5 +10,6 @@ public interface TimetableService {
     TimetablePage getAllTimetables();
     TimetableDto createTimetable(NewTimetableDto timetable);
     TimetableDto findById(UUID id);
+    TimetableDto updateById(TimetableDto timetable);
     void deleteById(UUID id);
 }

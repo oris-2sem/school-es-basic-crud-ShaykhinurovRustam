@@ -31,6 +31,11 @@ public class StudentController {
         return studentService.createStudent(newStudentDto);
     }
 
+    @PostMapping("/update")
+    public StudentDto updateById(@RequestBody StudentDto studentDto) {
+        return studentService.updateById(studentDto);
+    }
+
     @PostMapping("/del")
     public UUID deleteById(@RequestBody ModelId id) {
         studentService.deleteById(id.getId());

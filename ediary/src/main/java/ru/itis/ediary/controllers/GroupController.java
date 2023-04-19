@@ -31,6 +31,11 @@ public class GroupController {
         return groupService.createGroup(newGroupDto);
     }
 
+    @PostMapping("/update")
+    public GroupDto updateById(@RequestBody GroupDto groupDto) {
+        return groupService.updateById(groupDto);
+    }
+
     @PostMapping("/del")
     public UUID deleteById(@RequestBody ModelId id) {
         groupService.deleteById(id.getId());

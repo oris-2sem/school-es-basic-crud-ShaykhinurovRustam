@@ -10,5 +10,6 @@ public interface StudentService {
     StudentPage getAllStudents();
     StudentDto createStudent(NewStudentDto student);
     StudentDto findById(UUID id);
+    StudentDto updateById(StudentDto student);
     void deleteById(UUID id);
 }

@@ -10,5 +10,6 @@ public interface TaskService {
     TaskPage getAllTasks();
     TaskDto createTask(NewTaskDto task);
     TaskDto findById(UUID id);
+    TaskDto updateById(TaskDto task);
     void deleteById(UUID id);
 }

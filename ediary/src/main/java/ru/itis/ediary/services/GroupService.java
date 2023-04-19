@@ -10,5 +10,6 @@ public interface GroupService {
     GroupPage getAllGroups();
     GroupDto createGroup(NewGroupDto group);
     GroupDto findById(UUID id);
+    GroupDto updateById(GroupDto group);
     void deleteById(UUID id);
 }

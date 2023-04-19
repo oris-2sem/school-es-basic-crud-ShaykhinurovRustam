@@ -10,5 +10,6 @@ public interface ParentService {
     ParentPage getAllParents();
     ParentDto createParent(NewParentDto parent);
     ParentDto findById(UUID id);
+    ParentDto updateById(ParentDto parent);
     void deleteById(UUID id);
 }

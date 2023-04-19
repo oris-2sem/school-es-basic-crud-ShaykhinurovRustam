@@ -31,6 +31,11 @@ public class LessonController {
         return lessonService.createLesson(newLessonDto);
     }
 
+    @PostMapping("/update")
+    public LessonDto updateById(@RequestBody LessonDto lessonDto) {
+        return lessonService.updateById(lessonDto);
+    }
+
     @PostMapping("/del")
     public UUID deleteById(@RequestBody ModelId id) {
         lessonService.deleteById(id.getId());

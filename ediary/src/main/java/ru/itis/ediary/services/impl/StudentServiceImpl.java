@@ -13,6 +13,7 @@ import ru.itis.ediary.repositories.ParentRepository;
 import ru.itis.ediary.repositories.StudentRepository;
 import ru.itis.ediary.services.StudentService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -55,6 +56,33 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto findById(UUID id) {
         Optional<Student> student = studentRepository.findById(id);
         return student.map(StudentDto::from).orElse(null);
+    }
+
+    @Override
+    public StudentDto updateById(StudentDto student) {
+        Optional<Student> optionalStudent = studentRepository.findById(student.getId());
+
+        if (optionalStudent.isPresent()) {
+            Student studentToUpdate = optionalStudent.get();
+
+            if (student.getFirstName() != null) {
+                studentToUpdate.setFirstName(student.getFirstName());
+            }
+
+            if (student.getRating() != null) {
+                studentToUpdate.setRating(student.getRating());
+            }
+
+            if (student.getGroupId() != null) {
+                Optional<Group> group = groupRepository.findById(student.getGroupId());
+                group.ifPresent(studentToUpdate::setGroup);
+            }
+
+            studentRepository.save(studentToUpdate);
+            return from(studentToUpdate);
+        } else {
+            throw new EntityNotFoundException("Entity with id " + student.getId() + " not found");
+        }
     }
 
     @Override

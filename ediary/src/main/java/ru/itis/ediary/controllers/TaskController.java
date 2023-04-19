@@ -31,6 +31,11 @@ public class TaskController {
         return taskService.createTask(newTaskDto);
     }
 
+    @PostMapping("/update")
+    public TaskDto updateById(@RequestBody TaskDto taskDto) {
+        return taskService.updateById(taskDto);
+    }
+
     @PostMapping("/del")
     public UUID deleteById(@RequestBody ModelId id) {
         taskService.deleteById(id.getId());

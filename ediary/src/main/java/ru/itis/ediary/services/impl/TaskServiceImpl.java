@@ -13,6 +13,7 @@ import ru.itis.ediary.repositories.StudentRepository;
 import ru.itis.ediary.repositories.TaskRepository;
 import ru.itis.ediary.services.TaskService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -55,6 +56,32 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto findById(UUID id) {
         Optional<Task> task = taskRepository.findById(id);
         return task.map(TaskDto::from).orElse(null);
+    }
+
+    @Override
+    public TaskDto updateById(TaskDto task) {
+        Optional<Task> optionalTask = taskRepository.findById(task.getId());
+
+        if (optionalTask.isPresent()) {
+            Task taskToUpdate = optionalTask.get();
+
+            if (task.getMark() != null) {
+                taskToUpdate.setMark(task.getMark());
+            }
+
+            if (task.getCommentary() != null) {
+                taskToUpdate.setCommentary(task.getCommentary());
+            }
+
+            if (task.getDescription() != null) {
+                taskToUpdate.setDescription(task.getDescription());
+            }
+
+            taskRepository.save(taskToUpdate);
+            return from(taskToUpdate);
+        } else {
+            throw new EntityNotFoundException("Entity with id " + task.getId() + " not found");
+        }
     }
 
     @Override

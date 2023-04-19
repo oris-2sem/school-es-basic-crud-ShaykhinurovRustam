@@ -7,12 +7,15 @@ import org.springframework.stereotype.Service;
 import ru.itis.ediary.dto.group.GroupDto;
 import ru.itis.ediary.dto.group.GroupPage;
 import ru.itis.ediary.dto.group.NewGroupDto;
+import ru.itis.ediary.dto.lesson.LessonDto;
 import ru.itis.ediary.models.Group;
+import ru.itis.ediary.models.Lesson;
 import ru.itis.ediary.models.Teacher;
 import ru.itis.ediary.repositories.GroupRepository;
 import ru.itis.ediary.repositories.TeacherRepository;
 import ru.itis.ediary.services.GroupService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -54,6 +57,24 @@ public class GroupServiceImpl implements GroupService {
     public GroupDto findById(UUID id) {
         Optional<Group> group = groupRepository.findById(id);
         return group.map(GroupDto::from).orElse(null);
+    }
+
+    @Override
+    public GroupDto updateById(GroupDto group) {
+        Optional<Group> optionalGroup = groupRepository.findById(group.getId());
+
+        if (optionalGroup.isPresent()) {
+            Group groupToUpdate = optionalGroup.get();
+
+            if (group.getCourse() != null) {
+                groupToUpdate.setCourse(group.getCourse());
+            }
+
+            groupRepository.save(groupToUpdate);
+            return from(groupToUpdate);
+        } else {
+            throw new EntityNotFoundException("Entity with id " + group.getId() + " not found");
+        }
     }
 
     @Override
